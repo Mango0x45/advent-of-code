@@ -28,12 +28,13 @@ def simulate(data: list[list[str]]) -> list[list[str]]:
 
 	for i in range(100):
 		for j in range(100):
-			if data[i][j] == "#" and neighbours(data, i, j) in [2, 3]:
-				ndata[i][j] = "#"
-			elif data[i][j] == "." and neighbours(data, i, j) == 3:
+			if (data[i][j] == "#" and neighbours(data, i, j) in [2, 3]) or (
+				data[i][j] == "." and neighbours(data, i, j) == 3
+			):
 				ndata[i][j] = "#"
 
 	return ndata
+
 
 def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
