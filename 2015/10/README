@@ -1,0 +1,10 @@
+======
+ NOTE
+======
+
+I did not come up with the shell script solution myself, that is why I also included the very slow
+Go solution. The shell script solution comes from this Reddit post:
+
+	https://www.reddit.com/r/adventofcode/comments/3w6h3m/comment/cxtsigs/
+
+I felt that this solution was just too epic, so I included it here.

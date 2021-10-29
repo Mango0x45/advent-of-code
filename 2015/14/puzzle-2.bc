@@ -1,0 +1,33 @@
+scale = 0
+
+/* Return the largest element from array `a` of length `l` */
+define max(a[], l)
+{
+	auto m, i
+	for (i = 0; i < l; i++) {
+		if (a[i] > m)
+			m = a[i]
+	}
+	return m
+}
+
+define calc(speed[], time[], rest[], n)
+{
+	auto i, j, k, p[], d[]
+	
+	for (i = 0; i < 2503; i++) {
+		for (j = k = 0; j < n; j++) {
+			if (i % (time[j] + rest[j]) < time[j])
+				d[j] += speed[j]
+			if (d[j] > k)
+				k = d[j]
+		}
+
+		for (j = 0; j < n; j++) {
+			if (d[j] == k)
+				p[j] += 1
+		}
+	}
+
+	return max(p[], n)
+}
