@@ -43,6 +43,7 @@ func main() {
 
 	var n int
 	fmt.Fscanf(file, "%d", &n)
+	file.Close()
 	/* START PART 2 */
 	sn := n / 11
 	/* END PART 2 START PART 1 */
