@@ -2,7 +2,7 @@
 
 
 def main() -> None:
-	with open("input", "r") as f:
+	with open("input", "r", encoding="utf-8") as f:
 		data = f.readlines()
 
 	i = 0
@@ -11,8 +11,7 @@ def main() -> None:
 		ranges = data[i].split(": ")[1].split(" or ")
 		for _range in ranges:
 			bounds = tuple(map(int, _range.split("-")))
-			for j in range(bounds[0], bounds[1] + 1):
-				valid.append(j)
+			valid.extend(range(bounds[0], bounds[1] + 1))
 		i += 1
 
 	# Skip to nearby tickets
@@ -20,8 +19,7 @@ def main() -> None:
 	acc = 0
 
 	for j in range(i, len(data)):
-		fields = tuple(map(int, data[j].split(",")))
-		acc += sum(field for field in fields if field not in valid)
+		acc += sum(field for field in tuple(map(int, data[j].split(","))) if field not in valid)
 
 	print(acc)
 

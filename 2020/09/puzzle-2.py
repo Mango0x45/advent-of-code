@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
+
 import numpy as np
 
 
 def main() -> None:
 	goal = 138879426
-	with open("input", "r") as f:
+	with open("input", "r", encoding="utf-8") as f:
 		nums = np.array(list(map(int, f.readlines())), dtype=int)
 
 	lp = 0

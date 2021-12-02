@@ -26,22 +26,22 @@ def bitmask(mask: str, num: int) -> tuple[int, ...]:
 
 
 def main() -> None:
-	with open("input", "r") as f:
+	with open("input", "r", encoding="utf-8") as f:
 		lines = f.read().splitlines()
 
 	mem: dict[str, int] = {}
 	mask = ""
 	for line in lines:
-		line = line.split(" ")
-		if line[0] == "mask":
-			mask = line[2]
-		else:
-			address = line[0][4:-1]
-			addresses = bitmask(mask, int(address))
-			for a in addresses:
-				mem[a] = int(line[2])
+		match line.split(" "):
+			case ["mask", _, mask]:
+				mask = mask
+			case [addr, _, val]:
+				address = addr[4:-1]
+				addresses = bitmask(mask, int(address))
+				for a in addresses:
+					mem[a] = int(val)
 
-	print(sum(mem[val] for val in mem))
+	print(sum(mem.values()))
 
 
 if __name__ == "__main__":

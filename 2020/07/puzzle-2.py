@@ -8,11 +8,11 @@ def total_bags(innerbags: list[dict[int, str]]) -> int:
 	if innerbags[0]["name"] == "no other":
 		return 0
 
-	return sum([bag["count"] + bag["count"] * total_bags(bdict[bag["name"]]) for bag in innerbags])
+	return sum(bag["count"] + bag["count"] * total_bags(bdict[bag["name"]]) for bag in innerbags)
 
 
 def main() -> None:
-	with open("input", "r") as f:
+	with open("input", "r", encoding="utf-8") as f:
 		lines = f.readlines()
 
 	for baginfo in lines:

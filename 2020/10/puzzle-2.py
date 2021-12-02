@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from typing import List
-
 adaptors: list[str]
 
 
@@ -11,18 +9,16 @@ def combos(i: int, counts: dict[int, dict[int, int]] = {}) -> int:
 	if i in counts:
 		return counts[i]
 
-	ans = 0
-	for j in range(i + 1, len(adaptors)):
-		if adaptors[j] - adaptors[i] <= 3:
-			ans += combos(j, counts)
-
-	counts[i] = ans
-	return ans
+	counts[i] = sum(
+		combos(j, counts) if adaptors[j] - adaptors[i] <= 3 else 0
+		for j in range(i + 1, len(adaptors))
+	)
+	return counts[i]
 
 
 def main() -> None:
 	global adaptors
-	with open("input", "r") as f:
+	with open("input", "r", encoding="utf-8") as f:
 		adaptors = list(map(int, f.readlines()))
 
 	adaptors.append(0)

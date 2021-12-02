@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
-from typing import List
 
 
-def is_valid(nums: List[int], lp: int, up: int) -> bool:
-	for i in range(lp, up):
-		x = nums[up] - nums[i]
-		if x in nums[lp:up] and x != nums[i]:
-			return True
-	return False
+def is_valid(nums: list[int], lp: int, up: int) -> bool:
+	return any(((x := nums[up] - nums[i]) in nums[lp:up] and x != nums[i]) for i in range(lp, up))
 
 
 def main() -> None:
-	with open("input", "r") as f:
+	with open("input", "r", encoding="utf-8") as f:
 		nums = list(map(int, f.readlines()))
 
 	lp = 0

@@ -5,14 +5,11 @@ from operator import mul
 
 
 def not_reduced(label_dict: dict[int, str]) -> bool:
-	for i in label_dict:
-		if len(label_dict[i]) != 1:
-			return True
-	return False
+	return any(len(label_dict[i]) != 1 for i in label_dict)
 
 
 def main() -> None:
-	with open("input", "r") as f:
+	with open("input", "r", encoding="utf-8") as f:
 		data = f.readlines()
 
 	i = 0
@@ -23,6 +20,7 @@ def main() -> None:
 		ranges = data[i].split(": ")[1].split(" or ")
 		for _range in ranges:
 			bounds = tuple(map(int, _range.split("-")))
+			valid.extend(range(bounds[0], bounds[1] + 1))
 			for j in range(bounds[0], bounds[1] + 1):
 				valid.append(j)
 		i += 1
@@ -33,36 +31,21 @@ def main() -> None:
 	vtickets: list[tuple[int, ...]] = []
 	for j in range(i, len(data)):
 		fields = tuple(map(int, data[j].split(",")))
-		check = True
-		for field in fields:
-			if field not in valid:
-				check = False
-				break
-		if check == True:
-			vtickets.append(tuple(map(int, data[j].split(","))))
+		if all(field in valid for field in fields) == True:
+			vtickets.append(fields)
 
-	label_dict: dict[int, list[str]] = {}
-	for i in range(len(labels)):
-		label_dict[i] = []
+	label_dict: dict[int, list[str]] = {i: [] for i in range(len(labels))}
 
-	# Triple for loop, gross!
 	for label in labels:
 		valid: list[list[int]] = []
 		ranges = data[labels.index(label)].split(": ")[1].split(" or ")
 		for _range in ranges:
 			bounds = tuple(map(int, _range.split("-")))
-			for i in range(bounds[0], bounds[1] + 1):
-				valid.append(i)
+			valid.extend(range(bounds[0], bounds[1] + 1))
 
 		# For each column
 		for i in range(len(labels)):
-			allvalid = True
-			for ticket in vtickets:
-				if ticket[i] not in valid:
-					allvalid = False
-					break
-
-			if allvalid == True:
+			if all(ticket[i] in valid for ticket in vtickets):
 				label_dict[i].append(label)
 
 	# Reduce the label dictionary

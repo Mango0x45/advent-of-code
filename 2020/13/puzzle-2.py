@@ -32,7 +32,6 @@ def main() -> None:
 
 	buses = tuple(filter(lambda x: x != "x", ids))
 	modres = tuple(x if (x := bus - ids.index(bus)) != bus else 0 for bus in buses)
-
 	print(chinese_remainder(buses, modres))
 
 

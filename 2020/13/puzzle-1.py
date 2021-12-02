@@ -2,7 +2,7 @@
 
 
 def main() -> None:
-	with open("input", "r") as f:
+	with open("input", "r", encoding="utf-8") as f:
 		time = int(f.readline())
 		ids = list(map(int, f.readline().replace(",x", "").split(",")))
 
