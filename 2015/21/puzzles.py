@@ -57,8 +57,7 @@ def main() -> None:
 
 	# START PART 1
 	min_cost = 999999999999999999999999999999999999999999999999999999999
-	# END PART 1
-	# START PART 2
+	# END PART 1 START PART 2
 	max_cost = 0
 	# END PART 2
 
@@ -72,16 +71,14 @@ def main() -> None:
 			# START PART 1
 			if (delta > 0) or ((delta == 0) and wins(damage - b_armor, b_health)):
 				min_cost = min(cost, min_cost)
-			# END PART 1
-			# START PART 2
+			# END PART 1 START PART 2
 			if (delta < 0) or ((delta == 0) and not wins(damage - b_armor, b_health)):
 				max_cost = max(cost, max_cost)
 			# END PART 2
 
 	# START PART 1
 	print(min_cost)
-	# END PART 1
-	# START PART 2
+	# END PART 1 START PART 2
 	print(max_cost)
 	# END PART 2
 

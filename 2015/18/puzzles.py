@@ -28,10 +28,9 @@ def simulate(data: list[list[str]]) -> list[list[str]]:
 	cond = lambda x, y: (data[x][y] == "#" and neighbours(data, x, y) in [2, 3]) or (
 		data[x][y] == "." and neighbours(data, x, y) == 3
 	)
-	# END PART 1
-	# START PART 2
+	# END PART 1 START PART 2
 	cond = lambda x, y: (
-		((i, j) in [(0, 0), (0, 99), (99, 0), (99, 99)])
+		((x, y) in [(0, 0), (0, 99), (99, 0), (99, 99)])
 		or (data[x][y] == "#" and neighbours(data, x, y) in [2, 3])
 		or (data[x][y] == "." and neighbours(data, x, y) == 3)
 	)
