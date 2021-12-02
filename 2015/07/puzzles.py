@@ -12,7 +12,7 @@ recipes: dict[str, list[str] | uint16] = {}
 
 def solve(wire: str) -> uint16:
 	if wire.isdigit():
-		return int(wire)
+		return uint16(wire)
 	if type(recipes[wire]) == uint16:
 		return recipes[wire]
 
