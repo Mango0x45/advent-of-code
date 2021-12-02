@@ -38,12 +38,13 @@ def wins(d: int, hp: int) -> bool:
 def valid(e: tuple[tuple[str, int, int, int], ...]) -> bool:
 	w = a = r = 0
 	for i in e:
-		if i[0] == "Weapon":
-			w += 1
-		elif i[0] == "Armor":
-			a += 1
-		elif i[0] == "Ring":
-			r += 1
+		match i[0]:
+			case "Weapon":
+				w += 1
+			case "Armor":
+				a += 1
+			case "Ring":
+				r += 1
 	return (w == 1) and (a <= 1) and (r <= 2)
 
 
