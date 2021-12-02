@@ -24,21 +24,29 @@ def neighbours(data: list[list[str]], x: int, y: int) -> int:
 
 
 def simulate(data: list[list[str]]) -> list[list[str]]:
-	ndata = [["." for i in range(100)] for j in range(100)]
+	# START PART 1
+	cond = lambda x, y: (data[x][y] == "#" and neighbours(data, x, y) in [2, 3]) or (
+		data[x][y] == "." and neighbours(data, x, y) == 3
+	)
+	# END PART 1
+	# START PART 2
+	cond = lambda x, y: (
+		((i, j) in [(0, 0), (0, 99), (99, 0), (99, 99)])
+		or (data[x][y] == "#" and neighbours(data, x, y) in [2, 3])
+		or (data[x][y] == "." and neighbours(data, x, y) == 3)
+	)
+	# END PART 2
 
-	for i in range(100):
-		for j in range(100):
-			if (data[i][j] == "#" and neighbours(data, i, j) in [2, 3]) or (
-				data[i][j] == "." and neighbours(data, i, j) == 3
-			):
-				ndata[i][j] = "#"
-
-	return ndata
+	return [["#" if cond(i, j) else "." for j in range(100)] for i in range(100)]
 
 
 def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
 		data = [list(l.strip()) for l in f.readlines()]
+
+	# START PART 2
+	data[0][0], data[0][99], data[99][0], data[99][99] = "#", "#", "#", "#"
+	# END PART 2
 
 	for i in range(100):
 		data = simulate(data)
