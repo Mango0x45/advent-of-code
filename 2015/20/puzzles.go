@@ -17,7 +17,7 @@ func calc(n int) int {
 	}
 
 	for i := 1; i < int(s); i++ {
-		if n % i == 0 {
+		if n%i == 0 {
 			/* START PART 2 */
 			ndi := n / i
 			if ndi <= 50 {
@@ -26,7 +26,7 @@ func calc(n int) int {
 				acc += ndi
 			}
 			/* END PART 2 START PART 1 */
-			acc += i + n / i
+			acc += i + n/i
 			/* END PART 1 */
 		}
 	}
