@@ -5,18 +5,19 @@ from typing import Callable
 
 
 def solve(lines: list[str], comp: Callable[[int, int], bool]) -> int:
-	while True:
-		for i in range(len(lines[0])):
-			if len(lines) == 1:
-				return int(lines[0], 2)
+	for i in range(len(lines[0])):
+		if len(lines) == 1:
+			break
 
-			if comp(
-				len([line for line in lines if line[i] == "0"]),
-				len([line for line in lines if line[i] == "1"]),
-			):
-				lines = [line for line in lines if line[i] == "0"]
-			else:
-				lines = [line for line in lines if line[i] == "1"]
+		if comp(
+			len([line for line in lines if line[i] == "0"]),
+			len([line for line in lines if line[i] == "1"]),
+		):
+			lines = [line for line in lines if line[i] == "0"]
+		else:
+			lines = [line for line in lines if line[i] == "1"]
+
+	return int(lines[0], 2)
 
 
 def main() -> None:
