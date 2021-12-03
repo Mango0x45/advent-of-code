@@ -10,10 +10,10 @@ def solve(lines: list[str], comp: Callable[[int, int], bool]) -> int:
 			if len(lines) == 1:
 				return int(lines[0], 2)
 
-			ones = len([line for line in lines if line[i] == "1"])
-			zeros = len([line for line in lines if line[i] == "0"])
-
-			if comp(zeros, ones):
+			if comp(
+				len([line for line in lines if line[i] == "0"]),
+				len([line for line in lines if line[i] == "1"]),
+			):
 				lines = [line for line in lines if line[i] == "0"]
 			else:
 				lines = [line for line in lines if line[i] == "1"]
