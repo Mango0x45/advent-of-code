@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 board = list[list[int]]
-last: board = [[]] * 5
+last: board = []
 
 
 def bingo(board: board) -> bool:
