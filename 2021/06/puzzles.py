@@ -14,15 +14,11 @@ def main() -> None:
 		acc = collections.Counter(map(int, f.read().split(",")))
 
 	for _ in range(DAYS):
-		counts: Counter[int] = collections.Counter()
-		for a, c in acc.items():
-			if a:
-				counts[a - 1] += c
-			else:
-				counts[6] += c
-				counts[8] += c
-
-		acc = counts
+		n = acc[0]
+		for i in range(8):
+			acc[i] = acc[i + 1]
+		acc[6] += n
+		acc[8] = n
 
 	print(sum(acc.values()))
 
