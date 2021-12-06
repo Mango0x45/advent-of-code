@@ -22,7 +22,7 @@ def main() -> None:
 			)
 		)
 
-	emap: DefaultDict[str, dict[str, int]] = defaultdict(lambda: {})
+	emap: DefaultDict[str, dict[str, int]] = defaultdict(dict)
 	for entry in entries:
 		emap[entry[0]][entry[3]] = entry[2]
 		# START PART 2
