@@ -56,7 +56,7 @@ def main() -> None:
 	b_armor = int(b_armor.strip().split(": ")[1])
 
 	# START PART 1
-	min_cost = 999999999999999999999999999999999999999999999999999999999
+	min_cost = float('inf')
 	# END PART 1 START PART 2
 	max_cost = 0
 	# END PART 2
