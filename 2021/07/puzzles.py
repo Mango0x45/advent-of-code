@@ -15,7 +15,12 @@ def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
 		data = list(map(int, f.read().split(",")))
 
-	print(min(sum(gauss_sum(abs(i - data[j])) for j in range(len(data))) for i in range(max(data))))
+	print(
+		min(
+			sum(gauss_sum(abs(i - data[j])) for j in range(len(data)))
+			for i in range(min(data), max(data) + 1)
+		)
+	)
 
 
 if __name__ == "__main__":
