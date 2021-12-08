@@ -39,8 +39,8 @@ def solve(nums: list[str]) -> int:
 
 	acc = 0
 	for n, (k, v) in itertools.product(nums, nummap.items()):
-		if set(v) == set(n):
-			acc = acc * 10 + int(k)
+		if set(n) == v:
+			acc = acc * 10 + k
 	return acc
 
 
