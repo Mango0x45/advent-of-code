@@ -4,7 +4,7 @@ import itertools
 
 
 def solve(nums: list[str]) -> int:
-	nummap: dict[str, set[str]] = {}
+	nummap: list[set[str]] = [None for _ in range(10)]
 
 	# First pass, find the easy patterns. From these 4 patterns you can determine all other ones
 	for n in nums:
@@ -36,9 +36,9 @@ def solve(nums: list[str]) -> int:
 					nummap[0] = s
 
 	acc = 0
-	for n, (k, v) in itertools.product(nums[nums.index("|") + 1 :], nummap.items()):
+	for n, (i, v) in itertools.product(nums[nums.index("|") + 1 :], enumerate(nummap)):
 		if set(n) == v:
-			acc = acc * 10 + k
+			acc = acc * 10 + i
 	return acc
 
 
