@@ -14,14 +14,12 @@ def main() -> None:
 			valid.extend(range(bounds[0], bounds[1] + 1))
 		i += 1
 
-	# Skip to nearby tickets
-	i += 5
-	acc = 0
-
-	for j in range(i, len(data)):
-		acc += sum(field for field in tuple(map(int, data[j].split(","))) if field not in valid)
-
-	print(acc)
+	print(
+		sum(
+			sum(field for field in tuple(map(int, data[j].split(","))) if field not in valid)
+			for j in range(i + 5, len(data))
+		)
+	)
 
 
 if __name__ == "__main__":
