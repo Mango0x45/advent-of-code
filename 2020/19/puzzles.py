@@ -21,16 +21,11 @@ def check(test: str, patterns: dict[str, list[str]]) -> bool:
 
 	# 42 = 0, 31 = 1
 	res = search(r"^(0)+(1)+$", search_str)
-	return not (not res or search_str.count("0") <= search_str.count("1"))
+	return res and not search_str.count("0") <= search_str.count("1")
 
 
 def string_divide(string: str, div: int) -> list[str]:
-	l: list[str] = []
-	for i in range(0, len(string), div):
-		l.append(string[i : i + div])
-	return l
-
-
+	return [string[i : i + div] for i in range(0, len(string), div)]
 # END PART 2
 
 
