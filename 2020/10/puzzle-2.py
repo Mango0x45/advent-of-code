@@ -23,7 +23,7 @@ def main() -> None:
 
 	adaptors.append(0)
 	adaptors.sort()
-	adaptors.append(max(adaptors) + 3)
+	adaptors.append(adaptors[-1] + 3)
 
 	print(combos(0))
 
