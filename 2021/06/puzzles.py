@@ -20,7 +20,7 @@ def main() -> None:
 		acc[6] += n
 		acc[8] = n
 
-	print(sum(acc.values()))
+	print(acc.total())
 
 
 if __name__ == "__main__":
