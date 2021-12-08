@@ -19,7 +19,7 @@ def bitmask(mask: str, num: int) -> int:
 
 def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
-		lines = f.read().splitlines()
+		lines = f.readlines()
 
 	mem: dict[str, int] = {}
 	mask = ""
