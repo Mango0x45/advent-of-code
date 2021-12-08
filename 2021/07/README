@@ -1,0 +1,23 @@
+[06:37, 07/12/2021] Anna: You simply choose pivot as k/2 element in the array
+[06:37, 07/12/2021] Anna: Which you can pick from quick select
+[06:37, 07/12/2021] Anna: So in the second part probably also it’s possible to find pivot in
+                          mathematical way
+[06:37, 07/12/2021] Anna: Instead of just looping
+[07:00, 07/12/2021] Rok: Turns out I had the right idea, but for whatever reason decided to floor
+                         the number instead of rounding it properly
+[07:03, 07/12/2021] Rok: Not sure about the formal proof, but basically, turns out that arithmetic
+                         mean over n works for n^2 as well
+[07:03, 07/12/2021] Rok: And 2nd part basically uses triangular numbers, which is n^2 in disguise
+[07:04, 07/12/2021] Rok: so... avg = round(sum(nums) / len(nums))
+[07:06, 07/12/2021] Thomas: I just implemented part 1 again with quicksort
+[07:06, 07/12/2021] Thomas: And it’s actually significantly slower than my brute force
+[07:07, 07/12/2021] Thomas: I suspect it’s just a side affect of me using python, because the
+                            quickselect is written in python (slow) while my more functional
+                            bruteforce approach uses a few builtin functions which are obviously
+                            written in C
+[07:08, 07/12/2021] Thomas: My brute force is 300ms but my quickselect is 3 seconds lol
+
+
+TL;DR
+-----
+I know how to make this "faster" but Python is so slow it becomes slower
