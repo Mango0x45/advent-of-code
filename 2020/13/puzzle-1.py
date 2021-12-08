@@ -4,9 +4,7 @@
 def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
 		time = int(f.readline())
-		ids = list(map(int, f.readline().replace(",x", "").split(",")))
-
-	ids.sort()
+		ids = sorted(map(int, f.readline().replace(",x", "").split(",")))
 
 	min = -1
 	x = 0
