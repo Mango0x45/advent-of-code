@@ -20,17 +20,17 @@ def solve(nums: list[str]) -> int:
 				if nummap[1].issubset(s):
 					nummap[3] = s
 				# 4 is a subset of 5 union with 1 but not 2 union with 1
-				elif set(nummap[4]).issubset(set(s).union(set(nummap[1]))):
+				elif set(nummap[4]).issubset(s.union(nummap[1])):
 					nummap[5] = s
 				else:
 					nummap[2] = s
 			# 0, 6, or 9
 			case 6:
 				# 1 is a subset of 6 but not 0 or 9
-				if not set(nummap[1]).issubset(set(s)):
+				if not set(nummap[1]).issubset(s):
 					nummap[6] = s
 				# 4 is a subset of 9 but not 0
-				elif set(nummap[4]).issubset(set(s)):
+				elif set(nummap[4]).issubset(s):
 					nummap[9] = s
 				else:
 					nummap[0] = s
