@@ -34,11 +34,9 @@ def solve(nums: list[str]) -> int:
 					nummap[9] = s
 				else:
 					nummap[0] = s
-	
-	nums = nums[nums.index("|") + 1 :]
 
 	acc = 0
-	for n, (k, v) in itertools.product(nums, nummap.items()):
+	for n, (k, v) in itertools.product(nums[nums.index("|") + 1 :], nummap.items()):
 		if set(n) == v:
 			acc = acc * 10 + k
 	return acc
@@ -46,9 +44,7 @@ def solve(nums: list[str]) -> int:
 
 def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
-		data = list(map(lambda l: l.strip().split(), f.readlines()))
-
-	print(sum(solve(line) for line in data))
+		print(sum(solve(line) for line in map(lambda l: l.strip().split(), f.readlines())))
 
 
 if __name__ == "__main__":
