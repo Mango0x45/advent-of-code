@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+import subprocess
+
 import numpy as np
 
 
 def main() -> None:
-	goal = 138879426
+	goal = int(subprocess.run(["./puzzle-1.py"], capture_output=True, text=True).stdout)
 	with open("input", "r", encoding="utf-8") as f:
 		nums = np.array(list(map(int, f.readlines())), dtype=int)
 
