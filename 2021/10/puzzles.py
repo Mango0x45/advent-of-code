@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 # START PART 1
-import collections
-from typing import Counter
+from collections import Counter
 # END PART 1 START PART 2
 from functools import reduce
 # END PART 2
@@ -15,7 +14,7 @@ def main() -> None:
 		data = list(map(lambda l: l.strip(), f.readlines()))
 
 	# START PART 1
-	counts: Counter[int] = Counter()
+	counts: Counter[char] = Counter()
 	# END PART 1 START PART 2
 	scores: list[int] = []
 	# END PART 2
