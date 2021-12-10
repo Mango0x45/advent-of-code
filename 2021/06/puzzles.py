@@ -5,13 +5,12 @@
 # seeing this solution I couldn't help but realize how obvious it was.
 
 
-import collections
-from typing import Counter
+from collections import Counter
 
 
 def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
-		acc = collections.Counter(map(int, f.read().split(",")))
+		acc = Counter(map(int, f.read().split(",")))
 
 	for _ in range(DAYS):
 		n = acc[0]
