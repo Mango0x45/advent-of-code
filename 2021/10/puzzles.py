@@ -7,7 +7,7 @@ from typing import Counter
 from functools import reduce
 # END PART 2
 
-OPEN = ("(", "[", "{", "<")
+OPEN = "([{<"
 
 
 def main() -> None:
