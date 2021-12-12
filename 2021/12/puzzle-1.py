@@ -13,15 +13,6 @@ def solve(paths: defaultdict[list[str]], path: str, flag: bool = False) -> int:
 		# START PART 1
 		elif not (dest.islower() and dest in tokens):
 			acc += solve(paths, f"{path},{dest}")
-		# END PART 1 START PART 2
-		elif dest != "start":
-			if dest.islower() and dest in tokens:
-				if flag:
-					continue
-				acc += solve(paths, f"{path},{dest}", True)
-			else:
-				acc += solve(paths, f"{path},{dest}", flag)
-		# END PART 2
 
 	return acc
 
