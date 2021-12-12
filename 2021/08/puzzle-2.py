@@ -44,7 +44,7 @@ def solve(nums: list[str]) -> int:
 
 def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
-		print(sum(solve(line) for line in map(lambda l: l.strip().split(), f.readlines())))
+		print(sum(map(solve, map(lambda l: l.strip().split(), f.readlines()))))
 
 
 if __name__ == "__main__":
