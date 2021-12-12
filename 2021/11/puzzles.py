@@ -1,16 +1,13 @@
 #!/usr/bin/env python3
 
-# START PART 1
-from itertools import product
-# END PART 1 START PART 2
 from itertools import chain, count, product
-# END PART 2
 
-matrix = list[list[int]]
+from libaoc import map2d, matrix, read_int_matrix
+
 rows, cols = -1, -1
 
 
-def flash(grid: matrix, i: int, j: int) -> int:
+def flash(grid: matrix[int], i: int, j: int) -> int:
 	acc = 1
 	grid[i][j] = -1
 
@@ -29,7 +26,7 @@ def main() -> None:
 	global rows, cols
 
 	with open("input", "r", encoding="utf-8") as f:
-		grid = list(map(lambda l: [int(n) for n in l.strip()], f.readlines()))
+		grid = read_int_matrix(f)
 
 	rows = len(grid)
 	cols = len(grid[0])
@@ -40,8 +37,7 @@ def main() -> None:
 	# END PART 1 START PART 2
 	for step in count(1):
 	# END PART 2
-		for i, j in product(range(rows), range(cols)):
-			grid[i][j] += 1
+		grid = list(map2d(lambda n: n + 1, grid, list))
 
 		for i, j in product(range(rows), range(cols)):
 			if grid[i][j] > 9:
@@ -53,9 +49,7 @@ def main() -> None:
 			return
 		# END PART 2
 
-		for i, j in product(range(rows), range(cols)):
-			if grid[i][j] == -1:
-				grid[i][j] = 0
+		grid = list(map2d(lambda n: 0 if n == -1 else n, grid, list))
 
 	# START PART 1
 	print(acc)

@@ -18,3 +18,17 @@ the "puzzles.ext" file as it's required to get the "puzzle-1.ext" and "puzzle-2.
 actually run properly.
 
 .. _Advent of Code: https://adventofcode.com
+
+
+Running Code
+------------
+
+Some of the solutions in this repo make use of ``libaoc``. In order to run these solutions you need
+to add the directory of the library to the ``PYTHONPATH`` environment variable. In other words,
+instead of doing this::
+
+        $ ./puzzle-1.py
+
+You must do this::
+
+        $ PYTHONPATH=../../ ./puzzle-1.py

@@ -9,17 +9,17 @@ from functools import reduce
 from itertools import product
 from operator import mul
 
-matrix = list[list[int]]
+from libaoc import matrix, read_int_matrix
 
 
-def is_basin(grid: matrix, row: int, col: int) -> bool:
+def is_basin(grid: matrix[int], row: int, col: int) -> bool:
 	return (
 		not ((row < 0 or row > len(grid) - 1) or (col < 0 or col > len(grid[0]) - 1))
 		and grid[row][col] != 9
 	)
 
 
-def floodfill(grid: matrix, row: int, col: int) -> int:
+def floodfill(grid: matrix[int], row: int, col: int) -> int:
 	if row < 0 or row > len(grid) - 1 or col < 0 or col > len(grid[0]) - 1 or grid[row][col] == 9:
 		return 0
 
@@ -43,7 +43,7 @@ def floodfill(grid: matrix, row: int, col: int) -> int:
 	return size
 
 
-def solve(grid: matrix) -> int:
+def solve(grid: matrix[int]) -> int:
 	return reduce(
 		mul,
 		sorted(
@@ -59,7 +59,7 @@ def solve(grid: matrix) -> int:
 
 def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
-		print(solve(list(map(lambda l: [int(n) for n in l.strip()], f.readlines()))))
+		print(solve(read_int_matrix(f)))
 
 
 if __name__ == "__main__":

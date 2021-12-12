@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-board = list[list[int]]
+from libaoc import flatten, map2d, matrix
+
+board = matrix[int]
 last: board = []
 
 
@@ -42,8 +44,7 @@ def main() -> None:
 		# START PART 2
 		boards = list(filter(lambda b: not bingo(b), boards))
 		# END PART 2
-
-	print(num * sum(map(lambda x: sum(filter(lambda n: n != -1, x)), last)))
+	print(num * sum(flatten(map2d(lambda n: 0 if n == -1 else n, last))))
 
 
 if __name__ == "__main__":
