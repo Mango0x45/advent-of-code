@@ -3,7 +3,7 @@
 from collections import defaultdict
 
 
-def solve(paths: defaultdict[list[str]], path: str, flag: bool = False) -> int:
+def solve(paths: defaultdict[str, list[str]], path: str, flag: bool = False) -> int:
 	acc = 0
 	tokens = path.split(",")
 
@@ -27,7 +27,7 @@ def solve(paths: defaultdict[list[str]], path: str, flag: bool = False) -> int:
 
 
 def main() -> None:
-	paths: defaultdict[list[str]] = defaultdict(list)
+	paths: defaultdict[str, list[str]] = defaultdict(list)
 	with open("input", "r", encoding="utf-8") as f:
 		for entry in f.readlines():
 			x, y = entry.strip().split("-")
