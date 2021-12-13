@@ -7,24 +7,13 @@ BEGIN           { FS = ",|=" }
 flag == 1 { next }
 # END PART 1
 
-/x/ {
+/x|y/ {
 	for (y in grid) {
 		for (x in grid[y]) {
-			if (x * 1 > $2) {
+			if ($1 ~ /x/ && x * 1 > $2) {
 				delete grid[y][x]
 				grid[y][$2 - (x - $2)] = 1
-			}
-		}
-	}
-	# START PART 1
-	flag = 1
-	# END PART 1
-}
-
-/y/ {
-	for (y in grid) {
-		if (y * 1 > $2) {
-			for (x in grid[y]) {
+			} else if ($1 ~ /y/ && y * 1 > $2) {
 				delete grid[y][x]
 				grid[$2 - (y - $2)][x] = 1
 			}
