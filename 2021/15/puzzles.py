@@ -36,11 +36,11 @@ def elongate(grid: matrix[int]) -> matrix[int]:
 
 def main() -> None:
 	with open("input", "r", encoding="utf-8") as f:
+		# START PART 1
 		data = read_int_matrix(f)
-
-	# START PART 2
-	data = elongate(data)
-	# END PART 2
+		# END PART 1 START PART 2
+		data = elongate(read_int_matrix(f))
+		# END PART 2
 
 	X_UPPER = len(data)
 	Y_UPPER = len(data[0])
