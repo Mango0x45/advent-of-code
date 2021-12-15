@@ -16,6 +16,7 @@ class Node(NamedTuple):
 		return self.r < other.r
 
 
+# START PART 2
 def elongate(grid: matrix[int]) -> matrix[int]:
 	ngrid: matrix[int] = []
 	inc = lambda n: 1 if n == 9 else n + 1
@@ -30,6 +31,7 @@ def elongate(grid: matrix[int]) -> matrix[int]:
 		ngrid.append(list(map(inc, ngrid[i * l + j])))
 
 	return ngrid
+# END PART 2
 
 
 def main() -> None:
