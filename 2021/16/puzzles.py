@@ -34,11 +34,11 @@ class Packet(NamedTuple):
 			case 4:
 				return self.value
 			case 5:
-				return self.subpackets[0].calculate() > self.subpackets[1].calculate()
+				return f(self.subpackets[0]) > f(self.subpackets[1])
 			case 6:
-				return self.subpackets[0].calculate() < self.subpackets[1].calculate()
+				return f(self.subpackets[0]) < f(self.subpackets[1])
 			case 7:
-				return self.subpackets[0].calculate() == self.subpackets[1].calculate()
+				return f(self.subpackets[0]) == f(self.subpackets[1])
 		# END PART 2
 
 
