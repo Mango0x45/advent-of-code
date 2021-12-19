@@ -7,14 +7,10 @@ data: str
 
 
 class Packet(NamedTuple):
-	pass
-
-
-class Packet(NamedTuple):
 	version: int
 	type: int
 	value: int
-	subpackets: list[Packet]
+	subpackets: list['Packet']
 
 	def calculate(self) -> int:
 		f = lambda p: p.calculate()
