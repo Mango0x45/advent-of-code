@@ -1,10 +1,11 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-# I could not figure this out on my own, but god bless this guy for doing the math:
+# I could not figure this out on my own, but god bless this guy for doing the
+# math:
 # https://www.reddit.com/r/adventofcode/comments/3xflz8/day_19_solutions/cy4etju/
 
-# Some people has inputs that could be solved by just going in reverse trivially, my input did not
-# work
+# Some people have inputs that could be solved by just going in reverse
+# trivially, my input did not work
 
 sed -n '
 $ {

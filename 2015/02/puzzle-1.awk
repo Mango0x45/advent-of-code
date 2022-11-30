@@ -1,7 +1,6 @@
-#!/usr/bin/env -S awk -f
+#!/usr/bin/awk -f
 
-function min(a, b, c)
-{
+function min(a, b, c) {
 	if (a <= b && a <= c)
 		return a
 	if (b <= a && b <= c)
@@ -11,6 +10,7 @@ function min(a, b, c)
 
 BEGIN { FS = "x" }
 {
+	# START PART 1
 	x = $1 * $2
 	y = $2 * $3
 	z = $1 * $3

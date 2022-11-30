@@ -1,7 +1,8 @@
-The starting string is "hepxcrrq"
+The starting string is “hepxcrrq”
 
-The string must contain two sets of non-overlapping duplicates, this is best done as having the last
-5 characters be "xxyzz". The first 3 characters aren't illegal, so we don't need to change them.
-This gives an end result of "hepxxyzz".
+The string must contain two sets of non-overlapping duplicates, this is best
+done as having the last 5 characters be “xxyzz”.  The first 3 characters aren’t
+illegal, so we don't need to change them.  This gives an end result of
+“hepxxyzz”.
 
-QED. (I hope)
+QED.  (I hope)

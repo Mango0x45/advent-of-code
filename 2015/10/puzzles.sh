@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 
-output()
-{
+output() {
 	echo $in | tr -d '\n' | wc -c
 }
 

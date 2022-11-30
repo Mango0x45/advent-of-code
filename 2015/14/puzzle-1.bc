@@ -1,6 +1,5 @@
 /* Return the largest element from array `a` of length `l` */
-define max(a[], l)
-{
+define max(a[], l) {
 	auto m, i
 	for (i = 0; i < l; i++) {
 		if (a[i] > m)
@@ -9,11 +8,10 @@ define max(a[], l)
 	return m
 }
 
-/* Return the kilometers traveled by a raindeer that flys with speed `s` km/s for `t` seconds before
- * needing to rest for `r` seconds.
+/* Return the kilometers traveled by a raindeer that flys with speed `s` km/s
+ * for `t` seconds before needing to rest for `r` seconds.
  */
-define calc(s, t, r)
-{
+define calc(s, t, r) {
 	auto a, d
 	while (d + t <= 2503) {
 		a += s * t

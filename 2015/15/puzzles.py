@@ -6,6 +6,12 @@ from math import prod
 
 
 def main() -> None:
+	# START PART 1
+	GROUPS = 5
+	# END PART 1 START PART 2
+	GROUPS = 6
+	# END PART 2
+ 
 	data: list[list[int]] = []
 	with open("input", "r", encoding="utf-8") as f:
 		for line in f.readlines():

@@ -1,5 +1,4 @@
 %{
-#define _POSIX_C_SOURCE
 #include <err.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -38,17 +37,17 @@ unsigned long long registers[2];
 
 %%
 
-hlf	{ program[i].type = HLF; BEGIN(ARGS); }
-inc	{ program[i].type = INC; BEGIN(ARGS); }
-jie	{ program[i].type = JIE; BEGIN(ARGS); }
-jio	{ program[i].type = JIO; BEGIN(ARGS); }
-jmp	{ program[i].type = JMP; BEGIN(ARGS); }
-tpl	{ program[i].type = TPL; BEGIN(ARGS); }
+hlf { program[i].type = HLF; BEGIN(ARGS); }
+inc { program[i].type = INC; BEGIN(ARGS); }
+jie { program[i].type = JIE; BEGIN(ARGS); }
+jio { program[i].type = JIO; BEGIN(ARGS); }
+jmp { program[i].type = JMP; BEGIN(ARGS); }
+tpl { program[i].type = TPL; BEGIN(ARGS); }
 
-<ARGS>[ab]		{ program[i].reg = *yytext - 'a'; }
-<ARGS>[+\-][0-9]+	{ program[i].imm = atoi(yytext); }
-<ARGS>[ ,]+		{ ; }
-<ARGS>\n		{ i++; BEGIN(INITIAL); }
+<ARGS>[ab]        { program[i].reg = *yytext - 'a'; }
+<ARGS>[+\-][0-9]+ { program[i].imm = atoi(yytext); }
+<ARGS>[ ,]+       { ; }
+<ARGS>\n          { i++; BEGIN(INITIAL); }
 
 %%
 

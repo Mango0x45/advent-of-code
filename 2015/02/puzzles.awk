@@ -10,6 +10,13 @@ function min(a, b, c) {
 
 BEGIN { FS = "x" }
 {
+	# START PART 1
+	x = $1 * $2
+	y = $2 * $3
+	z = $1 * $3
+
+	sum += (2 * x) + (2 * y) + (2 * z) + min(x, y, z)
+	# END PART 1 START PART 2
 	x = $1 + $1 + $2 + $2
 	y = $2 + $2 + $3 + $3
 	z = $1 + $1 + $3 + $3

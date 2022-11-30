@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 
 def neighbours(data: list[list[str]], x: int, y: int) -> int:
@@ -6,12 +6,12 @@ def neighbours(data: list[list[str]], x: int, y: int) -> int:
 
 	for x1, y1 in [
 		(x - 1, y - 1),
-		(x - 1, y),
+		(x - 1, y    ),
 		(x - 1, y + 1),
-		(x, y - 1),
-		(x, y + 1),
+		(x,     y - 1),
+		(x,     y + 1),
 		(x + 1, y - 1),
-		(x + 1, y),
+		(x + 1, y    ),
 		(x + 1, y + 1),
 	]:
 		try:

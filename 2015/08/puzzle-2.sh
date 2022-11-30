@@ -1,7 +1,7 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 X=$(sed 's/\("\|\\\)/\\&/g; s/^/../' input \
-	| tr -d '\n' \
+	| tr -d '\n'                       \
 	| wc -c)
 Y=$(tr -d '\n' <input | wc -c)
 expr $X - $Y

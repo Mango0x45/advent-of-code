@@ -1,9 +1,10 @@
-This continues from the last puzzle, so our starting string is "hepxxyzz"
+This continues from the last puzzle, so our starting string is “hepxxyzz”
 
-Following the theme of the previous puzzle, we want to create an "xxyzz" pattern in the lowest
-amount of increments possible. Since the string currently ends in "xxyzz", we know that the next
-possible value we could have that satisfies this property is "aabcc". In order to go from "xxyzz" to
-"aabcc" however, you need to overflow which would increment the "p" to a "q". This gives an end
-result of "heqaabcc".
+Following the theme of the previous puzzle, we want to create an “xxyzz” pattern
+in the lowest amount of increments possible.  Since the string currently ends in
+“xxyzz”, we know that the next possible value we could have that satisfies this
+property is “aabcc”.  In order to go from “xxyzz” to “aabcc” however, you need to
+overflow which would increment the “p” to a “q”.  This gives an end result of
+“heqaabcc”.
 
 QED.

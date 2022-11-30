@@ -1,8 +1,7 @@
 scale = 0
 
 /* Return the largest element from array `a` of length `l` */
-define max(a[], l)
-{
+define max(a[], l) {
 	auto m, i
 	for (i = 0; i < l; i++) {
 		if (a[i] > m)
@@ -11,8 +10,7 @@ define max(a[], l)
 	return m
 }
 
-define calc(speed[], time[], rest[], n)
-{
+define calc(speed[], time[], rest[], n) {
 	auto i, j, k, p[], d[]
 	
 	for (i = 0; i < 2503; i++) {
