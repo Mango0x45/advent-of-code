@@ -1,7 +1,7 @@
 #!/usr/bin/awk -f
 
-/[0-9]+/ { acc += $1; next }
-{
+/[0-9]+/ { acc += $1 }
+!/./ {
 	if (acc > max[1]) {
 		max[3] = max[2];
 		max[2] = max[1];
