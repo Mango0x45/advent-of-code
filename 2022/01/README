@@ -1,0 +1,5 @@
+puzzle-1.awk and puzzle-2.awk were my original solutions.  puzzles.awk is a
+solution I wrote afterwards while reading the Gawk documentation, because I
+wanted to play around with setting RS to the empty string (this allows you to
+have blank-line seperated records).  It also works, and works just fine, so I'll
+leave it in this repo.
