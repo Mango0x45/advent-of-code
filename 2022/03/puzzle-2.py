@@ -8,23 +8,15 @@ def grouper(xs: list[str], n: int) -> list[list[str]]:
 	return zip_longest(*args)
 
 
+def process(group: list[str, str, str]) -> int:
+	x, y, z = group
+	c = set(x.strip()).intersection(y.strip()).intersection(z.strip()).pop()
+	return ord(c) - ord('a') + 1 if c >= 'a' else ord(c) - ord('A') + 27
+
+
 def main() -> None:
 	with open("input", "r") as f:
-		data = f.readlines()
-
-	acc = 0
-	data = grouper(data, 3)
-
-	for group in data:
-		for c in group[0]:
-			if group[1].find(c) != -1 and group[2].find(c) != -1:
-				if 'a' <= c <= 'z':
-					acc += ord(c) - ord('a') + 1
-				else:
-					acc += ord(c) - ord('A') + 27
-				break
-
-	print(acc)
+		print(sum(process(group) for group in grouper(f.readlines(), 3)))
 
 
 if __name__ == "__main__":
