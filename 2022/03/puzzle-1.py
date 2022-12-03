@@ -5,22 +5,14 @@ def cut(s: str) -> (str, str):
 	return s[:n], s[n:]
 
 
+def process(line: str) -> int:
+	car, cdr = cut(line)
+	c = set(car).intersection(cdr).pop()
+	return ord(c) - ord('a') + 1 if c >= 'a' else ord(c) - ord('A') + 27
+
 def main() -> None:
 	with open("input", "r") as f:
-		data = f.readlines()
-
-	acc = 0
-	for line in data:
-		car, cdr = cut(line)
-		for c in car:
-			if cdr.find(c) != -1:
-				if "a" <= c <= "z":
-					acc += ord(c) - ord("a") + 1
-				else:
-					acc += ord(c) - ord("A") + 27
-				break
-
-	print(acc)
+		print(sum(process(line) for line in f.readlines()))
 
 
 if __name__ == "__main__":
