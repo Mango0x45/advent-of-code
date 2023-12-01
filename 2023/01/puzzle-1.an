@@ -1,0 +1,6 @@
+#!/usr/local/bin/andy
+
+tr -d a-z <input
+| sed -E 's/(.).*(.)/\1\2/; s/^.$/&&/'
+| paste -sd+
+| bc
