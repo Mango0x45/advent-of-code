@@ -5,8 +5,8 @@ function abs(n) {
 }
 
 {
-	xs[++i] = $1
-	ys[i]   = $2
+	xs[NR] = $1
+	ys[NR] = $2
 }
 
 END {

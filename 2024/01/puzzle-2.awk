@@ -1,7 +1,7 @@
 #!/usr/bin/awk -f
 
 {
-	xs[++i] = $1
+	xs[NR] = $1
 	ys[$2]++
 }
 
