@@ -27,23 +27,17 @@ function check(skip,    xs, s, i, j, d, D)
 }
 
 # START PART 1
-{
-	s = sign($1 - $2)
-	n += check()
-}
+{ n += check() }
 # END PART 1 START PART 2
-{
-	s = sign($1 - $2)
-	if (!check()) {
-		for (i = 1; i <= NF; i++) {
-			if (check(i))
-				break
-		}
-		if (i > NF)
-			next
+!check() {
+	for (i = 1; i <= NF; i++) {
+		if (check(i))
+			break
 	}
-	n++
+	if (i > NF)
+		next
 }
+{ n++ }
 # END PART 2
 
 END { print n }
