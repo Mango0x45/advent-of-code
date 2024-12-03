@@ -8,10 +8,11 @@
                   (insert ?\]))
                 (read (current-buffer)))))
     (cl-loop for i from 0 below (length nums)
+             for x = (aref nums i)
              if (cl-evenp i)
-               collect (aref nums i) into xs
+               collect x into xs
              else
-               collect (aref nums i) into ys
+               collect x into ys
              finally return (thread-last
                               (seq-mapn #'- (sort xs) (sort ys))
                               (mapcar #'abs)
