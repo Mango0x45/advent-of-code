@@ -36,28 +36,28 @@ func xmasCnt(data [][]rune) int {
 	for i := range data {
 		for j := range data[i] {
 			coords := [...][8]int{
-				{i, j, i+1, j, i+2, j, i+3, j},       // Vertical;   top-down
-				{i, j, i-1, j, i-2, j, i-3, j},       // Vertical;   down-top
-				{i, j, i, j+1, i, j+2, i, j+3},       // Horizontal; left-right
-				{i, j, i, j-1, i, j-2, i, j-3},       // Horizontal; left-right
-				{i, j, i-1, j+1, i-2, j+2, i-3, j+3}, // Diagonal; bl-tr
-				{i, j, i+1, j+1, i+2, j+2, i+3, j+3}, // Diagonal; tl-br
-				{i, j, i+1, j-1, i+2, j-2, i+3, j-3}, // Diagonal; tr-bl
-				{i, j, i-1, j-1, i-2, j-2, i-3, j-3}, // Diagonal; br-tl
+				{i+0, j+0, i+1, j+0, i+2, j+0, i+3, j+0}, // Vertical;   top-down
+				{i+0, j+0, i-1, j+0, i-2, j+0, i-3, j+0}, // Vertical;   down-top
+				{i+0, j+0, i+0, j+1, i+0, j+2, i+0, j+3}, // Horizontal; left-right
+				{i+0, j+0, i+0, j-1, i+0, j-2, i+0, j-3}, // Horizontal; left-right
+				{i+0, j+0, i-1, j+1, i-2, j+2, i-3, j+3}, // Diagonal;   bl-tr
+				{i+0, j+0, i+1, j+1, i+2, j+2, i+3, j+3}, // Diagonal;   tl-br
+				{i+0, j+0, i+1, j-1, i+2, j-2, i+3, j-3}, // Diagonal;   tr-bl
+				{i+0, j+0, i-1, j-1, i-2, j-2, i-3, j-3}, // Diagonal;   br-tl
 			}
 			for _, x := range coords {
-				if x[0] >= 0 && x[0] < len(data) &&
-				x[2] >= 0 && x[2] < len(data) &&
-				x[4] >= 0 && x[4] < len(data) &&
-				x[6] >= 0 && x[6] < len(data) &&
-				x[1] >= 0 && x[1] < len(data[0]) &&
-				x[3] >= 0 && x[3] < len(data[0]) &&
-				x[5] >= 0 && x[5] < len(data[0]) &&
-				x[7] >= 0 && x[7] < len(data[0]) &&
-				data[x[0]][x[1]] == 'X' &&
-				data[x[2]][x[3]] == 'M' &&
-				data[x[4]][x[5]] == 'A' &&
-				data[x[6]][x[7]] == 'S' {
+				if x[0] >= 0 && x[0] < len(data)    &&
+				   x[2] >= 0 && x[2] < len(data)    &&
+				   x[4] >= 0 && x[4] < len(data)    &&
+				   x[6] >= 0 && x[6] < len(data)    &&
+				   x[1] >= 0 && x[1] < len(data[0]) &&
+				   x[3] >= 0 && x[3] < len(data[0]) &&
+				   x[5] >= 0 && x[5] < len(data[0]) &&
+				   x[7] >= 0 && x[7] < len(data[0]) &&
+				   data[x[0]][x[1]] == 'X'          &&
+				   data[x[2]][x[3]] == 'M'          &&
+				   data[x[4]][x[5]] == 'A'          &&
+				   data[x[6]][x[7]] == 'S' {
 					cnt++
 				}
 			}
