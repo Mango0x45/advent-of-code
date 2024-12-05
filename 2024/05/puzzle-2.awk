@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+#!/usr/bin/gawk -f
 
 function sort_page_numbers(i1, v1, i2, v2)
 {
