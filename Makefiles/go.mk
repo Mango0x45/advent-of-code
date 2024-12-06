@@ -1,13 +1,15 @@
 .POSIX:
 
 all:
-	sed '/START PART 2/,/END PART 2/d' puzzles.go >tmp1.go
-	sed '/START PART 1/,/END PART 1/d' puzzles.go >tmp2.go
-	go build tmp1.go
-	go build tmp2.go
-	mv tmp1 puzzle-1
-	mv tmp2 puzzle-2
-	rm -f tmp[12].go
+	f() {                                                                       \
+		n=$$(expr \( $$1 - 1 \| 2 \));                                          \
+		sed "/START PART $$n/,/END PART $$n/d" puzzles.go >tmp$$1.go;           \
+		go build tmp$$1.go;                                                     \
+		mv tmp$$1 puzzle-$$1;                                                   \
+		rm -f tmp$$1;                                                           \
+	};                                                                          \
+	f 1;                                                                        \
+	f 2;
 
 clean:
 	rm -f puzzle-[12]

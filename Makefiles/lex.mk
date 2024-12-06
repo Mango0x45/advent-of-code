@@ -1,11 +1,12 @@
 .POSIX:
 
-CC     = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Werror      \
-	 -march=native -mtune=native -O3 -flto \
+CC = cc
+CFLAGS =                                                                        \
+	-Wall -Wextra -Wpedantic -Werror                                            \
+	 -march=native -mtune=native -O3 -flto                                      \
 	 -pipe
 
-ALL    = ${CC} ${CFLAGS} ${CPPFLAGS} ${LDLIBS} ${LDFLAGS}
+ALL = ${CC} ${CFLAGS} ${CPPFLAGS} ${LDLIBS}
 
 all:
 	flex -f -DYY_NO_INPUT --nounput puzzles.l
