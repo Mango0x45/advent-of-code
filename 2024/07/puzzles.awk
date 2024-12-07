@@ -1,19 +1,37 @@
-#!/usr/bin/awk -f
+#!/usr/bin/gawk -f
 
-function eval(i, acc)
+@load "intdiv"
+
+# START PART 2
+function pow(x, e,    n)
 {
-	if (acc > $1)
-		return 0
-	if (i == NF + 1)
-		return acc == $1
-# START PART 1
-	return eval(i + 1, acc * $i) || eval(i + 1, acc + $i)
-# END PART 1 START PART 2
-	return eval(i + 1, (acc $i) + 0) || eval(i + 1, acc * $i) ||
-		eval(i + 1, acc + $i)
+	n = 1
+	while (e--)
+		n *= x
+	return n
+}
 # END PART 2
+
+function eval(i, acc,    a)
+{
+	if (acc <= 0)
+		return 0
+	if (i == 2)
+		return acc == $2
+
+# START PART 2
+	intdiv(acc, pow(10, length($i)), a)
+	if (a["remainder"] == $i && eval(i - 1, a["quotient"]))
+		return 1
+# END PART 2
+
+	intdiv(acc, $i, a)
+	if (a["remainder"] == 0 && eval(i - 1, a["quotient"]))
+		return 1
+
+	return eval(i - 1, acc - $i)
 }
 
-BEGIN       { FS = ":? " }
-eval(3, $2) { n += $1 }
-END         { print n }
+BEGIN        { FS = ":? " }
+eval(NF, $1) { n += $1 }
+END          { print n }
