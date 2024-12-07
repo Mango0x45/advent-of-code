@@ -5,9 +5,8 @@
 # START PART 2
 function pow(x, e,    n)
 {
-	n = 1
-	while (e--)
-		n *= x
+	for (n = 1; e--; n *= x)
+		;
 	return n
 }
 # END PART 2
