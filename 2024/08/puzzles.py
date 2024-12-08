@@ -28,7 +28,9 @@ def main() -> None:
 			antinodes.add(a + u⃗*2)
 			antinodes.add(b + v⃗*2)
 			# END PART 1 START PART 2
-			for i in range(1, max(w, h)):
+			x = int(w // abs(v⃗.real)) + 1
+			y = int(h // abs(v⃗.imag)) + 1
+			for i in range(1, min(x, y)):
 				antinodes.add(a + u⃗*i)
 				antinodes.add(b + v⃗*i)
 			# END PART 2
