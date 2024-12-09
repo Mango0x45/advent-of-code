@@ -1,3 +1,5 @@
+#!/usr/bin/emacs --script
+
 (defsubst char-to-number (char)
   (declare (pure t) (side-effect-free t))
   (- char ?0))
