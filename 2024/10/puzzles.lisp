@@ -1,6 +1,5 @@
 #!/usr/bin/sbcl --script
 
-
 (defun main (filename)
   (let ((lines (read-file-to-lines filename)))
     (loop with dimensions = (array-dimensions lines)
