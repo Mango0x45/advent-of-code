@@ -38,4 +38,4 @@
                         (char= (aref lines i j) needs))
               append (positions-of-nines lines i j)))))
 
-(format t "~a~%" (main "input"))
+(format t "~d~%" (main "input"))
