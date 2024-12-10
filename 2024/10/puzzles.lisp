@@ -1,12 +1,12 @@
 #!/usr/bin/sbcl --script
 
 (defun main (filename)
-  (let ((lines (read-file-to-lines filename)))
-    (loop with dimensions = (array-dimensions lines)
-          for i from 0 below (first dimensions)
-          summing (loop for j from 0 below (second dimensions)
-                        when (char= #\0 (aref lines i j))
-                        summing (score-for-trail-head lines i j)))))
+  (loop with lines = (read-file-to-lines filename)
+        with dimensions = (array-dimensions lines)
+        for i from 0 below (first dimensions)
+        summing (loop for j from 0 below (second dimensions)
+                      when (char= #\0 (aref lines i j))
+                      summing (score-for-trail-head lines i j))))
 
 (defun read-file-to-lines (filename)
   (with-open-file (stream filename)
