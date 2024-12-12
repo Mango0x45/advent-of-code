@@ -3,17 +3,14 @@
 (defparameter *seen*
   (make-hash-table :test #'equal))
 
-(defun read-grid (filename)
-  (with-open-file (stream filename)
+(defconstant +farm+
+  (with-open-file (stream "input")
     (let ((lines (loop for line = (read-line stream nil)
                        while line
                        collect (coerce line 'array))))
       (make-array (list (length lines)
                         (length (first lines)))
                   :initial-contents lines))))
-
-(defconstant +farm+
-  (read-grid "input"))
 
 (defun main ()
   (loop with dimensions = (array-dimensions +farm+)
