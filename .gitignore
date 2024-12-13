@@ -1,5 +1,7 @@
 __pycache__/
 .clang-format
+input
+input-*
 puzzle-[12]
-tmp[12].*
 pyrightconfig.json
+tmp[12].*
