@@ -1,5 +1,6 @@
 __pycache__/
 .clang-format
+.cookies
 input
 input-*
 puzzle-[12]

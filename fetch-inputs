@@ -1,0 +1,17 @@
+#!/bin/sh
+
+find .                                          \
+	 -regextype egrep                           \
+	 -mindepth 2                                \
+	 -maxdepth 2                                \
+	 -type d                                    \
+	 -regex '\./[0-9]{4}/[0-9]{2}'              \
+	| while IFS=/ read _ y d
+do
+	file=$y/$d/input
+	[ -f "$file" ] && continue
+	>&2 printf 'Fetching %s/%s... ' $y $d
+	wget -q --load-cookies=.cookies -O "$file" \
+		 "https://adventofcode.com/$y/day/${d#0}/input"
+	>&2 printf 'DONE\n' >&2
+done
