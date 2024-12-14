@@ -62,44 +62,41 @@
   ;; figure out which 2 diagonal-neighbors would turn our ‘T’ shape into
   ;; a rectangle, and use them to determine how many corners we have.
   (let ((n (length neighbors)))
-    (cond
-      ((= n 0) 4)
-      ((= n 1) 2)
-      ((= n 2)
-       (let* ((l (first  neighbors))
-              (r (second neighbors))
-              (li (car l)) (ri (car r))
-              (lj (cdr l)) (rj (cdr r)))
-         (cond
-           ((or (= li ri i) (= lj rj j)) 0)
-           ((char= char (try-aref
-                         (if (= li i) ri li)
-                         (if (= lj j) rj lj)))
-            1)
-           (:else 2))))
-      ((= n 3)
-       (let ((wart (loop for n in neighbors
-                         if (/= (car n) i)
-                           collect n into odd-one-out-i
-                         else
-                           collect n into odd-one-out-j
-                         finally (return
-                                   (first (if (= 1 (length odd-one-out-i))
-                                              odd-one-out-i
-                                              odd-one-out-j))))))
-         (loop for n in neighbors
-               count (not (or (equal n wart)
-                              (char= char (try-aref
-                                           (if (= (car n) i)
-                                               (car wart)
-                                               (car n))
-                                           (if (= (cdr n) j)
-                                               (cdr wart)
-                                               (cdr n)))))))))
-      ((= n 4)
-       (loop for (i . j) in (list (cons (1- i) (1- j)) (cons (1- i) (1+ j))
-                                  (cons (1+ i) (1- j)) (cons (1+ i) (1+ j)))
-             count (char/= (try-aref i j) char))))))
+    (case n
+      (0 4)
+      (1 2)
+      (2 (let* ((l (first  neighbors))
+                (r (second neighbors))
+                (li (car l)) (ri (car r))
+                (lj (cdr l)) (rj (cdr r)))
+           (cond
+             ((or (= li ri i) (= lj rj j)) 0)
+             ((char= char (try-aref
+                           (if (= li i) ri li)
+                           (if (= lj j) rj lj)))
+              1)
+             (:else 2))))
+      (3 (let ((wart (loop for n in neighbors
+                           if (/= (car n) i)
+                             collect n into odd-one-out-i
+                           else
+                             collect n into odd-one-out-j
+                           finally (return
+                                     (first (if (= 1 (length odd-one-out-i))
+                                                odd-one-out-i
+                                                odd-one-out-j))))))
+           (loop for n in neighbors
+                 count (not (or (equal n wart)
+                                (char= char (try-aref
+                                             (if (= (car n) i)
+                                                 (car wart)
+                                                 (car n))
+                                             (if (= (cdr n) j)
+                                                 (cdr wart)
+                                                 (cdr n)))))))))
+      (4 (loop for (i . j) in (list (cons (1- i) (1- j)) (cons (1- i) (1+ j))
+                                    (cons (1+ i) (1- j)) (cons (1+ i) (1+ j)))
+               count (char/= (try-aref i j) char))))))
 ;; END PART 2
 
 (defun try-aref (i j)
