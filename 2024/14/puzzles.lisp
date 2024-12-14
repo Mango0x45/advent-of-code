@@ -7,17 +7,6 @@
 (defconstant +width+  101)
 (defconstant +height+ 103)
 
-(defconstant +quadrant-bounds+
-  (make-array '(4 4) :initial-contents
-              (let* ((x +width+)
-                     (y +height+)
-                     (x/2 (floor x 2))
-                     (y/2 (floor y 2)))
-                `((0 0 ,x/2 ,y/2)
-                  (,(1+ x/2) 0 ,x ,y/2)
-                  (0 ,(1+ y/2) ,x/2 ,y)
-                  (,(1+ x/2) ,(1+ y/2) ,x ,y)))))
-
 (defparameter *chart*
   (make-array (list +height+ +width+)))
 
@@ -37,11 +26,13 @@
     ;; END PART 1 START PART 2
     (handler-case (sb-posix:mkdir "charts" #o755)
       (sb-posix:syscall-error ()))      ; EEXIST
-    (loop for i from 0 below 10000
-          do (setq *chart* (make-array (list +height+ +width+)))
-          (loop for robot in robots
-                do (plot-on-chart (location-after-n-seconds i robot))
-                finally (save-chart-to-bmp i)))
+    (dotimes (i 10000)
+      (dotimes (x +width+)
+        (dotimes (y +height+)
+          (setf (aref *chart* y x) 0)))
+      (loop for robot in robots
+            do (plot-on-chart (location-after-n-seconds i robot))
+            finally (save-chart-to-bmp i)))
     ;; END PART 2
     ))
 
@@ -76,6 +67,18 @@
 (defun plot-on-chart (position)
   (incf (aref *chart* (cdr position) (car position))))
 
+;; START PART 1
+(defconstant +quadrant-bounds+
+  (make-array '(4 4) :initial-contents
+              (let* ((x +width+)
+                     (y +height+)
+                     (x/2 (floor x 2))
+                     (y/2 (floor y 2)))
+                `((0 0 ,x/2 ,y/2)
+                  (,(1+ x/2) 0 ,x ,y/2)
+                  (0 ,(1+ y/2) ,x/2 ,y)
+                  (,(1+ x/2) ,(1+ y/2) ,x ,y)))))
+
 (defun sum-for-quadrant (quadrant)
   (loop with q1 = (aref +quadrant-bounds+ quadrant 0)
         with q2 = (aref +quadrant-bounds+ quadrant 1)
@@ -84,6 +87,7 @@
         for x from q1 below q3
         sum (loop for y from q2 below q4
                   sum (aref *chart* y x))))
+;; END PART 1
 
 (defun integer-char-p (char)
   (or (digit-char-p char) (char= char #\-)))
