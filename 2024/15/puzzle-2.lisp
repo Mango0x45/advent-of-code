@@ -159,12 +159,6 @@
 (defun right-of (v⃗ &optional (n 1))
   (vec2+ v⃗ (cons n 0)))
 
-(defun up-from (v⃗ &optional (n 1))
-  (vec2+ v⃗ (cons 0 (- n))))
-
-(defun down-from (v⃗ &optional (n 1))
-  (vec2+ v⃗ (cons 0 n)))
-
 ;;; Parsing
 
 (defun parse-input (filename)
