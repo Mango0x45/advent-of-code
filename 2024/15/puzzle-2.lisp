@@ -1,17 +1,57 @@
 #!/usr/bin/sbcl --script
 
+(defun usage (&optional option)
+  (when option
+    (format *error-output* "puzzle-2.lisp: invalid option -- `~a'~%" option))
+  (format *error-output* "Usage: puzzle-2.lisp [-s]~%")
+  (quit :unix-status 1))
+
 (defparameter *map*       nil)
 (defparameter *moves*     nil)
 (defparameter *robot-pos* nil)
 
+(defparameter *sflag*
+  (case (length *posix-argv*)
+    (1
+     nil)
+    (2
+     (let ((arg (nth 1 *posix-argv*)))
+       (unless (or (string= arg "-s")
+                   (string= arg "--simulate"))
+         (usage arg)))
+     t)
+    (otherwise
+     (usage (nth 2 *posix-argv*)))))
+
 (defun main (filename)
   (parse-input filename)
-  (mapc #'handle-move *moves*)
+  (if *sflag*
+      (loop for move in *moves*
+            do (print-map)
+               (sleep 0.0001)
+               (handle-move move)
+            finally (print-map))
+      (mapc #'handle-move *moves*))
   (loop with (my mx) = (array-dimensions *map*)
         for y from 0 below my
         sum (loop for x from 0 below mx
                   if (box-at-pos-p (cons x y))
                     sum (+ x (* 100 y)))))
+
+(defun print-map ()
+  (format t "~C[2J" #\Esc)
+  (loop with (my mx) = (array-dimensions *map*)
+        for y from 0 below my
+        append (loop for x from 0 below mx
+                     append (ecase (aref *map* y x)
+                              (#\@ '(#\Esc #\[ #\9 #\2 #\m #\@ #\Esc #\[ #\m))
+                              (#\# '(#\Esc #\[ #\9 #\1 #\m #\# #\Esc #\[ #\m))
+                              (#\. '(#\.))
+                              (#\[ '(#\Esc #\[ #\3 #\4 #\m #\[ #\Esc #\[ #\m))
+                              (#\] '(#\Esc #\[ #\3 #\4 #\m #\] #\Esc #\[ #\m))))
+          into string
+        collect #\Newline into string
+        finally (format t "~a" (coerce string 'string))))
 
 (defun handle-move (v⃗)
   (when (can-move-p v⃗)
