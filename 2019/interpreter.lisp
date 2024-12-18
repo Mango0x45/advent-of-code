@@ -25,7 +25,7 @@
 
 (defconstant +op-add+   1)
 (defconstant +op-mul+   2)
-(defconstant +op-set+   3)
+(defconstant +op-read+  3)
 (defconstant +op-out+   4)
 (defconstant +op-jt+    5)
 (defconstant +op-jn+    6)
@@ -63,7 +63,7 @@
            (ecase opcode
              (#.+op-add+  3)
              (#.+op-mul+  3)
-             (#.+op-set+  1)
+             (#.+op-read+ 1)
              (#.+op-out+  1)
              (#.+op-jt+   2)
              (#.+op-jn+   2)
@@ -132,7 +132,7 @@
 (definstruction mul (mach x y &out dst)
   (setf (memref mach dst) (* x y)))
 
-(definstruction set (mach &out dst)
+(definstruction read (mach &out dst)
   (setf (memref mach dst) (funcall (mach-input-handler mach))))
 
 (definstruction out (mach x)
