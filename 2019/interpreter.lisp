@@ -8,12 +8,13 @@
 
 (defstruct (machine (:conc-name mach-)
                     (:constructor make-machine
-                        (program stdin stdout))
+                        (program stdin stdout initial-arguments))
                     (:type (vector t)))
   (ip        0 :type integer)
   (program nil :type array)
   (stdin   nil :type (or null stream))
-  (stdout  nil :type (or null stream)))
+  (stdout  nil :type (or null stream))
+  (initial-arguments nil :type list))
 
 (defstruct (instruction (:conc-name instr-)
                         (:constructor make-instruction
@@ -39,8 +40,8 @@
 (define-condition machine-sysjump (error) ())
 (define-condition machine-sysexit (error) ())
 
-(defun run (program &optional stdin stdout)
-  (loop with mach = (make-machine program stdin stdout) do
+(defun run (program &optional stdin stdout &key initial-arguments)
+  (loop with mach = (make-machine program stdin stdout initial-arguments) do
     (let* ((instr (decode-next-instr mach))
            (opcode (instr-opcode instr))
            (handler (aref *handlers* opcode))
@@ -106,7 +107,12 @@
 
 (definstruction set (mach dst)
   (setf (aref (mach-program mach) dst)
-        (parse-integer (read-line (mach-stdin mach)))))
+        (if (mach-initial-arguments mach)
+            (destructuring-bind (head &rest tail)
+                (mach-initial-arguments mach)
+              (setf (mach-initial-arguments mach) tail)
+              head)
+            (parse-integer (read-line (mach-stdin mach))))))
 
 (definstruction out (mach x)
   (format (mach-stdout mach) "~d~%" x))
