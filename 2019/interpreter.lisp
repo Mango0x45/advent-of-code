@@ -6,119 +6,130 @@
 
 ;;; Interpreter
 
-(defstruct opcode
-  instr
-  param-count
-  param-modes
+(defstruct (machine (:conc-name mach-)
+                    (:constructor make-machine
+                        (program stdin stdout))
+                    (:type (vector t)))
+  (ip        0 :type integer)
+  (program nil :type array)
+  (stdin   nil :type (or null stream))
+  (stdout  nil :type (or null stream)))
+
+(defstruct (instruction (:conc-name instr-)
+                        (:constructor make-instruction
+                            (opcode param-count param-modes last-outputs-p))
+                        (:type (vector t)))
+  (opcode         nil :type integer)
+  (param-count    nil :type integer)
+  (param-modes    nil :type array)
   last-outputs-p)
 
-(defconstant +instr-add+   1)
-(defconstant +instr-mul+   2)
-(defconstant +instr-set+   3)
-(defconstant +instr-out+   4)
-(defconstant +instr-jt+    5)
-(defconstant +instr-jn+    6)
-(defconstant +instr-le+    7)
-(defconstant +instr-eq+    8)
-(defconstant +instr-quit+ 99)
+(defconstant +op-add+   1)
+(defconstant +op-mul+   2)
+(defconstant +op-set+   3)
+(defconstant +op-out+   4)
+(defconstant +op-jt+    5)
+(defconstant +op-jn+    6)
+(defconstant +op-le+    7)
+(defconstant +op-eq+    8)
+(defconstant +op-quit+ 99)
 
 (defparameter *handlers* (make-array 100))
 
-;; Interpreter State
-(defparameter *ip* 0)
-(defparameter *inputs* nil)
-(defparameter *outputs* nil)
-(defparameter *ram* nil)
+(define-condition machine-sysjump (error) ())
+(define-condition machine-sysexit (error) ())
 
-(defun run (ram &optional inputs)
-  (setq *ip* 0 *inputs* inputs *outputs* nil *ram* ram)
-  (loop
-    (let* ((opcode (decode-next-opcode))
-           (handler (aref *handlers* (opcode-instr opcode))))
-      (when (eq (apply handler (fetch-arguments opcode)) 'quit)
-        (return-from run (nreverse *outputs*))))))
+(defun run (program &optional stdin stdout)
+  (loop with mach = (make-machine program stdin stdout) do
+    (let* ((instr (decode-next-instr mach))
+           (opcode (instr-opcode instr))
+           (handler (aref *handlers* opcode))
+           (arguments (fetch-arguments instr mach))
+           (ip-shift (1+ (instr-param-count instr))))
+      (handler-case (apply handler mach arguments)
+        (machine-sysjump (c)
+          (declare (ignore c))
+          (decf (mach-ip mach) ip-shift))
+        (machine-sysexit (c)
+          (declare (ignore c))
+          (return-from run)))
+      (incf (mach-ip mach) ip-shift))))
 
-(defun decode-next-opcode ()
-  (let* ((opcode
-           (aref *ram* *ip*))
-         (instr
-           (mod opcode 100))
+(defun decode-next-instr (mach)
+  (let* ((raw-instr
+           (aref (mach-program mach) (mach-ip mach)))
+         (opcode
+           (mod raw-instr 100))
          (param-count
-           (ecase instr
-             (#.+instr-add+  3)
-             (#.+instr-mul+  3)
-             (#.+instr-set+  1)
-             (#.+instr-out+  1)
-             (#.+instr-jt+   2)
-             (#.+instr-jn+   2)
-             (#.+instr-le+   3)
-             (#.+instr-eq+   3)
-             (#.+instr-quit+ 0)))
+           (ecase opcode
+             (#.+op-add+  3)
+             (#.+op-mul+  3)
+             (#.+op-set+  1)
+             (#.+op-out+  1)
+             (#.+op-jt+   2)
+             (#.+op-jn+   2)
+             (#.+op-le+   3)
+             (#.+op-eq+   3)
+             (#.+op-quit+ 0)))
          (param-modes
            (make-array 3 :initial-contents
-                       (list (mod (floor opcode   100) 10)
-                             (mod (floor opcode  1000) 10)
-                             (mod (floor opcode 10000) 10))))
+                       (list (mod (floor raw-instr   100) 10)
+                             (mod (floor raw-instr  1000) 10)
+                             (mod (floor raw-instr 10000) 10))))
          (last-outputs-p
-           (member instr '(#.+instr-add+ #.+instr-mul+ #.+instr-set+
-                           #.+instr-le+ #.+instr-eq+))))
-    (make-opcode :instr instr
-                 :param-count param-count
-                 :param-modes param-modes
-                 :last-outputs-p last-outputs-p)))
+           (member opcode '(#.+op-add+ #.+op-mul+ #.+op-set+
+                            #.+op-le+ #.+op-eq+))))
+    (make-instruction opcode param-count param-modes last-outputs-p)))
 
-(defun fetch-arguments (opcode)
-  (when (opcode-last-outputs-p opcode)
-    (setf (aref (opcode-param-modes opcode)
-                (1- (opcode-param-count opcode)))
+(defun fetch-arguments (instr mach)
+  (when (instr-last-outputs-p instr)
+    (setf (aref (instr-param-modes instr)
+                (1- (instr-param-count instr)))
           1))
-  (loop for i from 1 to (opcode-param-count opcode)
-        collect (ecase (aref (opcode-param-modes opcode) (1- i))
-                  (0 (aref *ram* (aref *ram* (+ *ip* i))))
-                  (1             (aref *ram* (+ *ip* i))))))
+  (loop with program = (mach-program mach) with ip = (mach-ip mach)
+        for i from 1 to (instr-param-count instr)
+        collect (ecase (aref (instr-param-modes instr) (1- i))
+                  (0 (aref program (aref program (+ ip i))))
+                  (1               (aref program (+ ip i))))))
 
 ;;; Instructions
 
 (defmacro definstruction (name (&rest params) &body forms)
-  (let ((instr (intern (format nil "+INSTR-~:@(~a~)+" name))))
-    `(setf (aref *handlers* ,instr)
-           (lambda ,params
-             (case (progn ,@forms)
-               ('jumpedp nil)
-               ('quit 'quit)
-               (otherwise (incf *ip* ,(1+ (length params)))))))))
+  (let ((instr (intern (format nil "+OP-~:@(~a~)+" name))))
+    `(setf (aref *handlers* ,instr) (lambda ,params ,@forms))))
 
-(definstruction add (x y dst)
-  (setf (aref *ram* dst) (+ x y)))
+(definstruction add (mach x y dst)
+  (setf (aref (mach-program mach) dst) (+ x y)))
 
-(definstruction mul (x y dst)
-  (setf (aref *ram* dst) (* x y)))
+(definstruction mul (mach x y dst)
+  (setf (aref (mach-program mach) dst) (* x y)))
 
-(definstruction set (dst)
-  (setf (aref *ram* dst) (car *inputs*))
-  (setq *inputs* (cdr *inputs*)))
+(definstruction set (mach dst)
+  (setf (aref (mach-program mach) dst)
+        (parse-integer (read-line (mach-stdin mach)))))
 
-(definstruction out (x)
-  (push x *outputs*))
+(definstruction out (mach x)
+  (format (mach-stdout mach) "~d~%" x))
 
-(definstruction jt (x addr)
+(definstruction jt (mach x addr)
   (unless (zerop x)
-    (setq *ip* addr)
-    'jumpedp))
+    (setf (mach-ip mach) addr)
+    (error 'machine-sysjump)))
 
-(definstruction jn (x addr)
+(definstruction jn (mach x addr)
   (when (zerop x)
-    (setq *ip* addr)
-    'jumpedp))
+    (setf (mach-ip mach) addr)
+    (error 'machine-sysjump)))
 
-(definstruction le (x y dst)
-  (setf (aref *ram* dst) (bool->int (< x y))))
+(definstruction le (mach x y dst)
+  (setf (aref (mach-program mach) dst) (bool-to-int (< x y))))
 
-(definstruction eq (x y dst)
-  (setf (aref *ram* dst) (bool->int (= x y))))
+(definstruction eq (mach x y dst)
+  (setf (aref (mach-program mach) dst) (bool-to-int (= x y))))
 
-(definstruction quit ()
-  'quit)
+(definstruction quit (mach)
+  (declare (ignore mach))
+  (error 'machine-sysexit))
 
 ;;; Input Parsing
 
@@ -140,7 +151,7 @@
 (defun commap (char)
   (char= char #\,))
 
-(defun bool->int (bool)
+(defun bool-to-int (bool)
   (if bool 1 0))
 
 (defun try-aref (array &rest subscripts)
