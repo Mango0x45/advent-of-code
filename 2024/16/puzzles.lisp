@@ -1,6 +1,6 @@
 #!/usr/bin/sbcl --script
 
-(load "heap.lisp")
+(load "../heap.lisp")
 
 (defstruct dnode
   (x    nil :type integer)
