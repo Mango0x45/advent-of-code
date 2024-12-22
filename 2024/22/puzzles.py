@@ -12,7 +12,7 @@ def main() -> None:
 		xs = map(int, f.readlines())
 
 	# START PART 1
-	print(sum(map(lastfrom, map(secrets, xs))))
+	print(sum(map(takelast, map(secrets, xs))))
 	# END PART 1 START PART 2
 	sums = collections.defaultdict(int)
 	for x in xs:
@@ -51,7 +51,7 @@ def lastdigit(n: int) -> int:
 	return n % 10
 
 
-def lastfrom[T](xs: Iterable[T]) -> T:
+def takelast[T](xs: Iterable[T]) -> T:
 	*_, x = xs
 	return x
 
