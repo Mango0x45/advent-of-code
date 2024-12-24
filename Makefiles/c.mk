@@ -4,7 +4,7 @@ CC = cc
 CFLAGS =                                                                        \
 	-Wall -Wextra -Wpedantic -Werror                                            \
 	-march=native -mtune=native -O3 -flto                                       \
-	-pipe
+	-pipe -D_GNU_SOURCE
 
 ALL = ${CC} ${CFLAGS} ${CPPFLAGS} ${LDLIBS}
 
