@@ -39,7 +39,7 @@ def main() -> None:
 
 def fewest_clicks(mach: Machine) -> int:
 	for i in itertools.count(start=1):
-		for comb in itertools.combinations_with_replacement(mach.buttons, i):
+		for comb in itertools.combinations(mach.buttons, i):
 			if functools.reduce(operator.xor, comb) == mach.target:
 				return i
 	# NOTREACHED
