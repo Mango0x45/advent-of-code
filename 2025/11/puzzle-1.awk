@@ -4,7 +4,6 @@ function npaths(src, dst,    n, i)
 {
 	if (src == dst)
 		return 1;
-	n = 0
 	for (i in paths[src])
 		n += npaths(paths[src][i], dst)
 	return n
